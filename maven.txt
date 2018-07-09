@@ -1,4 +1,4 @@
-
+http://rickwagner.blogspot.com/2010/10/how-to-find-which-jar-class-is-in.html
 Prev
 Next
 Chapter 5. Apache Maven
