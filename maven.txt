@@ -1,0 +1,174 @@
+
+Prev
+Next
+Chapter 5. Apache Maven
+5.1. report
+JBoss Tattletale integrates with Apache Maven such that you can generate the reports directly from your build environment.
+
+To be able to use the Tattletale Maven plugin in your Maven project, you will have to add the following plugin declaration in the pom.xml of your project:
+
+       
+<build>
+  <plugins>
+    <plugin>
+      <groupId>org.jboss.tattletale</groupId>
+      <artifactId>tattletale-maven</artifactId>
+      <!-- The version of the plugin you want to use -->
+      <version>1.1.0.Final</version>
+      <executions>
+ 	<execution>
+ 	  <goals>
+ 	    <goal>report</goal>
+ 	  </goals>
+ 	</execution>
+      </executions>
+      <configuration>
+ 	<!-- This is the location which will be scanned for generating tattletale reports
+ 	  --> 
+ 	<source>/absolutepath/to/source/dir</source>
+ 	<!-- This is where the reports will be generated -->
+ 	<destination>/absolute/path/to/reports/dir</destination>
+      </configuration>
+    </plugin>
+  </plugins>
+</build>     	
+        
+     
+Note
+By default, the tattletale-maven plugin is attached to the "package" phase of Maven.
+5.1. report
+Usage:
+
+Once you have configured your project's pom.xml to include the tattletale-maven plugin, as explained earlier, you can generate the report by running the package goal on your project
+mvn clean package
+     
+Table 5.1. Apache Maven: report
+
+Key	Value
+source	The directory that contains the Java archives. Multiple directories can be scanned by separating each with the File.pathSeparator character - f.ex. dir1:dir2 on Un*x.
+Default: Current directory
+
+destination	The directory where the reports should be generated Default: Current directory
+configuration	Path to the configuration file Default: No value
+filter	Path to the filter file Default: No value
+reports	Contains nested report elements of which reports that should be generated. All reports can be selected by specifying "*". The following reports are supported:
+classdependants
+The "Class Dependants" report.
+
+classdependson
+The "Class DependsOn" report.
+
+dependants
+The "Dependants" report.
+
+dependson
+The "DependsOn" report.
+
+graphviz
+The "Graphical dependencies" report.
+
+transitivedependants
+The "Transitive Dependants" report.
+
+transitivedependson
+The "Transitive DependsOn" report.
+
+circulardependency
+The "Circular Dependency" report.
+
+classlocation
+The "Class Location" report.
+
+osgi
+The "OSGi" report.
+
+sealed
+The "Sealed Information" report.
+
+sign
+The "Signing Information" report.
+
+eliminatejars
+The "Eliminate Jar files with different versions" report.
+
+invalidversion
+The "Invalid version" report.
+
+multiplejars
+The "Multiple Jar files" report.
+
+multiplejarspackage
+The "Multiple Jar files (Package)" report.
+
+multiplelocations
+The "Multiple Locations" report.
+
+unusedjar
+The "Unused Jar" report.
+
+blacklisted
+The "Black listed" report.
+
+noversion
+The "No version" report.
+
+jar
+The "Jar archive" report.
+
+Default: All reports
+
+classloader	Specifies which classloader structure that should be used when scanning the archives. Can be one of the following:
+org.jboss.tattletale.reporting.classloader.NoopClassLoaderStructure
+A no-operation classloader structure implementation that doesn't scope any archives.
+
+org.jboss.tattletale.reporting.classloader.JBossAS4ClassLoaderStructure
+A classloader structure implementation that scopes based on JBoss Application Server 4.x directory structures.
+
+org.jboss.tattletale.reporting.classloader.JBossAS5ClassLoaderStructure
+A classloader structure implementation that scopes based on JBoss Application Server 5.x directory structures.
+
+org.jboss.tattletale.reporting.classloader.JBossAS6ClassLoaderStructure
+A classloader structure implementation that scopes based on JBoss Application Server 6.x directory structures.
+
+Default: org.jboss.tattletale.reporting.classloader.NoopClassLoaderStructure
+
+profiles	Contains nested profile elements of profiles to resolve against. All profiles can be selected by specifying "*". The following profiles are supported:
+java5
+The Java 5 API.
+
+java6
+The Java 6 API.
+
+ee5
+The Java Enterprise Edition 5 API.
+
+ee6
+The Java Enterprise Edition 6 API.
+
+seam22
+The JBoss Seam 2.2 API.
+
+cdi10
+The Contexts and Dependency Injection (CDI) 1.0 API.
+
+spring25
+The Spring 2.5 API.
+
+spring30
+The Spring 3.0 API.
+
+Default: <report>java5</report><report>java6</report>
+
+excludes	Contains nested exclude elements of directories or files that should be excluded from the scan. F.ex.
+<exclude>**/server/**</exclude><exclude>myjar.jar</exclude>
+
+Default: Empty list
+
+blacklisted	Contains nested blacklist elements of black listed classes or packages. F.ex. <blacklist>com.mycompany.forinternaluseonly</blacklist> <blacklist>com.partner.forinternaluseonly</blacklist>
+Default: Empty list
+
+failOnInfo	Fail the build if a failed INFO report is found Default: false
+failOnWarn	Fail the build if a failed WARN report is found Default: false
+failOnError	Fail the build if a failed ERROR report is found Default: false
+deleteOutputDirectory	Should the output directory be deleted Default: true
+scan	A comma separated list of file extensions that should be scanned Default: .jar
